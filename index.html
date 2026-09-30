@@ -12,6 +12,142 @@
     color: #222;
     padding: 15px;
   }
+
+  /* ========== স্প্ল্যাশ স্ক্রিন (এন্ট্রি অ্যানিমেশন) ========== */
+  #splashScreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f2027, #1e3c72, #2a5298, #1e3c72);
+    background-size: 300% 300%;
+    animation: gradientMove 6s ease infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #splashScreen.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ঘুরতে থাকা আলোর বলয় */
+  .splash-ring {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #00d4ff;
+    border-right-color: #00d4ff;
+    animation: spinRing 1.5s linear infinite;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+  }
+  .splash-ring.ring2 {
+    width: 280px;
+    height: 280px;
+    border-top-color: #ffd93d;
+    border-left-color: #ffd93d;
+    animation: spinRing 2.5s linear infinite reverse;
+    box-shadow: 0 0 40px rgba(255, 217, 61, 0.5);
+  }
+
+  @keyframes spinRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* আইকন */
+  .splash-icon {
+    font-size: 5rem;
+    animation: iconPop 1s ease-out, floatIcon 2s ease-in-out infinite 1s;
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8));
+    z-index: 2;
+  }
+  @keyframes iconPop {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  @keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* নাম */
+  .splash-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 30px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.9), 0 0 40px rgba(0, 212, 255, 0.5);
+    opacity: 0;
+    animation: titleSlide 1s ease-out 0.6s forwards;
+    z-index: 2;
+  }
+  @keyframes titleSlide {
+    0% { opacity: 0; transform: translateY(30px) scale(0.8); letter-spacing: 20px; }
+    100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
+  }
+
+  /* সাবটাইটেল */
+  .splash-sub {
+    color: #a8d8ff;
+    font-size: 1rem;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1.2s forwards;
+    z-index: 2;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* লোডিং ডট */
+  .loading-dots {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out 1.6s forwards;
+    z-index: 2;
+  }
+  .loading-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #00d4ff;
+    box-shadow: 0 0 15px #00d4ff;
+    animation: dotBounce 1.4s ease-in-out infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; background: #ffd93d; box-shadow: 0 0 15px #ffd93d; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1.3); opacity: 1; }
+  }
+
+  /* মেইন কনটেন্ট শুরুতে লুকানো থাকবে */
+  #mainContent {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  #mainContent.show {
+    opacity: 1;
+  }
+
+  /* ========== মূল ওয়েবসাইটের স্টাইল ========== */
   header {
     text-align: center;
     background: linear-gradient(135deg, #1e3c72, #2a5298);
@@ -36,6 +172,11 @@
     padding: 15px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(42, 82, 152, 0.2);
   }
   .card .label { font-size: 0.85rem; color: #666; }
   .card .value { font-size: 1.5rem; font-weight: bold; color: #1e3c72; margin-top: 5px; }
@@ -46,7 +187,18 @@
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    animation: panelFadeIn 0.6s ease-out backwards;
   }
+  .panel:nth-of-type(1) { animation-delay: 0.1s; }
+  .panel:nth-of-type(2) { animation-delay: 0.2s; }
+  .panel:nth-of-type(3) { animation-delay: 0.3s; }
+  .panel:nth-of-type(4) { animation-delay: 0.4s; }
+
+  @keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .panel h2 {
     font-size: 1.2rem;
     margin-bottom: 15px;
@@ -68,7 +220,7 @@
     border-radius: 8px;
     outline: none;
   }
-  input:focus, select:focus { border-color: #2a5298; }
+  input:focus, select:focus { border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.15); }
   button {
     cursor: pointer;
     border: none;
@@ -76,17 +228,14 @@
     transition: 0.2s;
   }
   .btn-primary { background: #2a5298; color: #fff; }
-  .btn-primary:hover { background: #1e3c72; }
+  .btn-primary:hover { background: #1e3c72; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(42,82,152,0.4); }
   .btn-backup { background: #0f9d58; color: #fff; }
-  .btn-backup:hover { background: #0b7a43; }
+  .btn-backup:hover { background: #0b7a43; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15,157,88,0.4); }
   .btn-restore { background: #f4b400; color: #222; cursor: pointer; }
   .btn-restore:hover { background: #d99e00; }
   .btn-del { background: #e53935; color: #fff; padding: 6px 10px; font-size: 0.85rem; }
   .btn-del:hover { background: #b71c1c; }
-  .btn-toggle { background: #607d8b; color: #fff; padding: 6px 10px; font-size: 0.85rem; }
-  .btn-toggle:hover { background: #455a64; }
 
-  /* পিস + / - বাটনের স্টাইল */
   .qty-box {
     display: inline-flex;
     align-items: center;
@@ -131,6 +280,7 @@
     border-bottom: 1px solid #e3e8ef;
   }
   th { background: #f4f7fb; color: #1e3c72; }
+  tr { transition: background 0.2s ease; }
   tr:hover { background: #f9fbfd; }
 
   .badge {
@@ -141,8 +291,6 @@
   }
   .in-stock { background: #d4edda; color: #155724; }
   .out-stock { background: #f8d7da; color: #721c24; }
-
-  .actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
   .backup-bar {
     display: flex;
@@ -159,105 +307,145 @@
 
   .total-cell { font-weight: bold; color: #0f9d58; }
 
+  /* নতুন পণ্য যোগ হলে অ্যানিমেশন */
+  @keyframes rowSlideIn {
+    from { opacity: 0; transform: translateX(-30px); background: #fff9c4; }
+    to { opacity: 1; transform: translateX(0); background: transparent; }
+  }
+  tr.new-row {
+    animation: rowSlideIn 0.6s ease-out;
+  }
+
   @media (max-width: 600px) {
     header h1 { font-size: 1.6rem; }
     th, td { font-size: 0.82rem; padding: 7px; }
     .qty-btn { width: 22px; height: 22px; font-size: 0.9rem; }
+    .splash-title { font-size: 1.8rem; }
+    .splash-icon { font-size: 3.5rem; }
+    .splash-ring { width: 160px; height: 160px; }
+    .splash-ring.ring2 { width: 210px; height: 210px; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>রাসেল টেলিকম</h1>
-  <p>মোবাইল ও ইলেকট্রনিকস সামগ্রীর হিসাব ও স্টক ব্যবস্থাপনা</p>
-</header>
-
-<!-- ড্যাশবোর্ড -->
-<div class="dashboard">
-  <div class="card">
-    <div class="label">মোট পণ্যের ধরন</div>
-    <div class="value" id="totalItems">0</div>
-  </div>
-  <div class="card">
-    <div class="label">মোট পিস</div>
-    <div class="value" id="totalPieces">0</div>
-  </div>
-  <div class="card">
-    <div class="label">মোট স্টক মূল্য</div>
-    <div class="value" id="totalValue">৳ 0</div>
-  </div>
-  <div class="card">
-    <div class="label">স্টকে আছে</div>
-    <div class="value" id="inStockCount">0</div>
-  </div>
-  <div class="card">
-    <div class="label">স্টক নেই</div>
-    <div class="value" id="outStockCount">0</div>
+<!-- ============ স্প্ল্যাশ স্ক্রিন (এন্ট্রি অ্যানিমেশন) ============ -->
+<div id="splashScreen">
+  <div class="splash-ring"></div>
+  <div class="splash-ring ring2"></div>
+  <div class="splash-icon">📱</div>
+  <div class="splash-title">রাসেল টেলিকম</div>
+  <div class="splash-sub">আপনার বিশ্বস্ত মোবাইল শপ</div>
+  <div class="loading-dots">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 </div>
 
-<!-- নতুন পণ্য যোগ করার ফর্ম -->
-<div class="panel">
-  <h2>➕ নতুন পণ্য যোগ করুন</h2>
-  <div class="form-grid">
-    <input type="text" id="itemName" placeholder="পণ্যের নাম (যেমন: Samsung A15)">
-    <input type="number" id="itemPrice" placeholder="একটির দাম (৳)" min="0" step="any">
-    <input type="number" id="itemQty" placeholder="পরিমাণ (কয় পিস)" min="0" value="1">
-    <button class="btn-primary" onclick="addItem()">যোগ করুন</button>
-  </div>
-</div>
+<!-- ============ মেইন কনটেন্ট ============ -->
+<div id="mainContent">
 
-<!-- সার্চ -->
-<div class="panel">
-  <h2>🔍 পণ্য খুঁজুন</h2>
-  <input type="text" id="searchBox" placeholder="পণ্যের নাম লিখে সার্চ করুন..." oninput="renderItems()" style="width:100%">
-</div>
+  <header>
+    <h1>রাসেল টেলিকম</h1>
+    <p>মোবাইল ও ইলেকট্রনিকস সামগ্রীর হিসাব ও স্টক ব্যবস্থাপনা</p>
+  </header>
 
-<!-- ব্যাকআপ ও রিস্টোর -->
-<div class="panel">
-  <h2>💾 ব্যাকআপ ও রিস্টোর</h2>
-  <div class="backup-bar">
-    <button class="btn-backup" onclick="backupData()">⬇ ডাটা ব্যাকআপ (Save)</button>
-    <label class="btn-restore" style="padding:10px 12px; border-radius:8px; font-weight:600; display:inline-block;">
-      ⬆ ডাটা রিস্টোর (Load)
-      <input type="file" id="restoreFile" accept=".json" onchange="restoreData(event)" hidden>
-    </label>
+  <!-- ড্যাশবোর্ড -->
+  <div class="dashboard">
+    <div class="card">
+      <div class="label">মোট পণ্যের ধরন</div>
+      <div class="value" id="totalItems">0</div>
+    </div>
+    <div class="card">
+      <div class="label">মোট পিস</div>
+      <div class="value" id="totalPieces">0</div>
+    </div>
+    <div class="card">
+      <div class="label">মোট স্টক মূল্য</div>
+      <div class="value" id="totalValue">৳ 0</div>
+    </div>
+    <div class="card">
+      <div class="label">স্টকে আছে</div>
+      <div class="value" id="inStockCount">0</div>
+    </div>
+    <div class="card">
+      <div class="label">স্টক নেই</div>
+      <div class="value" id="outStockCount">0</div>
+    </div>
   </div>
-</div>
 
-<!-- পণ্যের তালিকা -->
-<div class="panel">
-  <h2>📋 পণ্যের তালিকা</h2>
-  <div style="overflow-x:auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>পণ্যের নাম</th>
-          <th>একটির দাম</th>
-          <th>পরিমাণ (পিস)</th>
-          <th>মোট দাম</th>
-          <th>স্ট্যাটাস</th>
-          <th>অ্যাকশন</th>
-        </tr>
-      </thead>
-      <tbody id="itemTable">
-      </tbody>
-    </table>
-    <div class="empty-msg" id="emptyMsg">কোনো পণ্য এখনো যোগ করা হয়নি।</div>
+  <!-- নতুন পণ্য যোগ করার ফর্ম -->
+  <div class="panel">
+    <h2>➕ নতুন পণ্য যোগ করুন</h2>
+    <div class="form-grid">
+      <input type="text" id="itemName" placeholder="পণ্যের নাম (যেমন: Samsung A15)">
+      <input type="number" id="itemPrice" placeholder="একটির দাম (৳)" min="0" step="any">
+      <input type="number" id="itemQty" placeholder="পরিমাণ (কয় পিস)" min="0" value="1">
+      <button class="btn-primary" onclick="addItem()">যোগ করুন</button>
+    </div>
   </div>
+
+  <!-- সার্চ -->
+  <div class="panel">
+    <h2>🔍 পণ্য খুঁজুন</h2>
+    <input type="text" id="searchBox" placeholder="পণ্যের নাম লিখে সার্চ করুন..." oninput="renderItems()" style="width:100%">
+  </div>
+
+  <!-- ব্যাকআপ ও রিস্টোর -->
+  <div class="panel">
+    <h2>💾 ব্যাকআপ ও রিস্টোর</h2>
+    <div class="backup-bar">
+      <button class="btn-backup" onclick="backupData()">⬇ ডাটা ব্যাকআপ (Save)</button>
+      <label class="btn-restore" style="padding:10px 12px; border-radius:8px; font-weight:600; display:inline-block;">
+        ⬆ ডাটা রিস্টোর (Load)
+        <input type="file" id="restoreFile" accept=".json" onchange="restoreData(event)" hidden>
+      </label>
+    </div>
+  </div>
+
+  <!-- পণ্যের তালিকা -->
+  <div class="panel">
+    <h2>📋 পণ্যের তালিকা</h2>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>পণ্যের নাম</th>
+            <th>একটির দাম</th>
+            <th>পরিমাণ (পিস)</th>
+            <th>মোট দাম</th>
+            <th>স্ট্যাটাস</th>
+            <th>অ্যাকশন</th>
+          </tr>
+        </thead>
+        <tbody id="itemTable"></tbody>
+      </table>
+      <div class="empty-msg" id="emptyMsg">কোনো পণ্য এখনো যোগ করা হয়নি।</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-/* ===== ডাটা লোড ও সেভ ===== */
+/* ============ স্প্ল্যাশ স্ক্রিন কন্ট্রোল ============ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('splashScreen').classList.add('hide');
+    document.getElementById('mainContent').classList.add('show');
+  }, 3000); // ৩ সেকেন্ড পর মেইন কনটেন্ট দেখাবে
+});
+
+/* ============ ডাটা লোড ও সেভ ============ */
 let items = JSON.parse(localStorage.getItem('raselTelecomDataV2')) || [];
+let lastAddedId = null;
 
 function saveToStorage() {
   localStorage.setItem('raselTelecomDataV2', JSON.stringify(items));
 }
 
-/* ===== পণ্য যোগ ===== */
+/* ============ পণ্য যোগ ============ */
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
   const price = parseFloat(document.getElementById('itemPrice').value);
@@ -267,23 +455,25 @@ function addItem() {
   if (isNaN(price) || price < 0) { alert('সঠিক দাম লিখুন!'); return; }
   if (isNaN(qty) || qty < 0) { alert('সঠিক পরিমাণ লিখুন!'); return; }
 
+  const newId = Date.now();
   items.push({
-    id: Date.now(),
+    id: newId,
     name: name,
     price: price,
     qty: qty
   });
+  lastAddedId = newId;
 
   saveToStorage();
   renderItems();
 
-  // ফর্ম রিসেট
   document.getElementById('itemName').value = '';
   document.getElementById('itemPrice').value = '';
   document.getElementById('itemQty').value = '1';
+  document.getElementById('itemName').focus();
 }
 
-/* ===== পণ্য ডিলিট ===== */
+/* ============ পণ্য ডিলিট ============ */
 function deleteItem(id) {
   if (!confirm('আপনি কি এই পণ্যটি মুছে ফেলতে চান?')) return;
   items = items.filter(item => item.id !== id);
@@ -291,7 +481,7 @@ function deleteItem(id) {
   renderItems();
 }
 
-/* ===== পিস বাড়ানো ===== */
+/* ============ পিস বাড়ানো ============ */
 function increaseQty(id) {
   const item = items.find(i => i.id === id);
   if (item) {
@@ -301,7 +491,7 @@ function increaseQty(id) {
   }
 }
 
-/* ===== পিস কমানো ===== */
+/* ============ পিস কমানো ============ */
 function decreaseQty(id) {
   const item = items.find(i => i.id === id);
   if (item && item.qty > 0) {
@@ -311,12 +501,12 @@ function decreaseQty(id) {
   }
 }
 
-/* ===== স্ট্যাটাস নির্ধারণ (qty এর উপর ভিত্তি করে) ===== */
+/* ============ স্ট্যাটাস নির্ধারণ ============ */
 function getStatus(item) {
   return item.qty > 0 ? 'আছে' : 'নাই';
 }
 
-/* ===== রেন্ডার ===== */
+/* ============ রেন্ডার ============ */
 function renderItems() {
   const search = document.getElementById('searchBox').value.toLowerCase();
   const tbody = document.getElementById('itemTable');
@@ -327,11 +517,7 @@ function renderItems() {
     item.name.toLowerCase().includes(search)
   );
 
-  if (filtered.length === 0) {
-    emptyMsg.style.display = 'block';
-  } else {
-    emptyMsg.style.display = 'none';
-  }
+  emptyMsg.style.display = filtered.length === 0 ? 'block' : 'none';
 
   filtered.forEach((item, index) => {
     const status = getStatus(item);
@@ -339,6 +525,9 @@ function renderItems() {
     const totalPrice = item.price * item.qty;
 
     const tr = document.createElement('tr');
+    if (item.id === lastAddedId) {
+      tr.classList.add('new-row');
+    }
     tr.innerHTML = `
       <td>${index + 1}</td>
       <td>${escapeHtml(item.name)}</td>
@@ -359,10 +548,11 @@ function renderItems() {
     tbody.appendChild(tr);
   });
 
+  lastAddedId = null;
   updateDashboard();
 }
 
-/* ===== ড্যাশবোর্ড আপডেট ===== */
+/* ============ ড্যাশবোর্ড আপডেট ============ */
 function updateDashboard() {
   document.getElementById('totalItems').textContent = items.length;
 
@@ -378,7 +568,7 @@ function updateDashboard() {
     items.filter(i => i.qty === 0).length;
 }
 
-/* ===== ব্যাকআপ ===== */
+/* ============ ব্যাকআপ ============ */
 function backupData() {
   if (items.length === 0) { alert('ব্যাকআপ করার জন্য কোনো ডাটা নেই!'); return; }
   const dataStr = JSON.stringify(items, null, 2);
@@ -392,7 +582,7 @@ function backupData() {
   URL.revokeObjectURL(url);
 }
 
-/* ===== রিস্টোর ===== */
+/* ============ রিস্টোর ============ */
 function restoreData(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -402,7 +592,6 @@ function restoreData(event) {
       const data = JSON.parse(e.target.result);
       if (!Array.isArray(data)) throw new Error('ভুল ফরম্যাট');
 
-      // পুরনো ফরম্যাট (তারিখসহ) হলে সেটাও সাপোর্ট করা হবে
       const normalized = data.map(d => ({
         id: d.id || Date.now() + Math.random(),
         name: d.name || 'নামহীন',
@@ -424,16 +613,16 @@ function restoreData(event) {
   reader.readAsText(file);
 }
 
-/* ===== XSS থেকে সুরক্ষা ===== */
+/* ============ XSS সুরক্ষা ============ */
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-/* ===== ইনিশিয়াল রেন্ডার ===== */
+/* ============ ইনিশিয়াল রেন্ডার ============ */
 renderItems();
 </script>
 
 </body>
-</html>
+ </html>
