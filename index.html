@@ -8,12 +8,35 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: #eef2f7;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-attachment: fixed;
     color: #222;
     padding: 15px;
+    min-height: 100vh;
+    position: relative;
+  }
+  /* ব্যাকগ্রাউন্ডে আলোর বলয় */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255, 217, 61, 0.15), transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.1), transparent 50%);
+    animation: bgFloat 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes bgFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-5%, -5%) rotate(180deg); }
   }
 
-  /* ========== স্প্ল্যাশ স্ক্রিন (এন্ট্রি অ্যানিমেশন) ========== */
+  /* ========== স্প্ল্যাশ স্ক্রিন ========== */
   #splashScreen {
     position: fixed;
     top: 0; left: 0;
@@ -33,14 +56,11 @@
     opacity: 0;
     visibility: hidden;
   }
-
   @keyframes gradientMove {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-
-  /* ঘুরতে থাকা আলোর বলয় */
   .splash-ring {
     position: absolute;
     width: 220px;
@@ -60,13 +80,10 @@
     animation: spinRing 2.5s linear infinite reverse;
     box-shadow: 0 0 40px rgba(255, 217, 61, 0.5);
   }
-
   @keyframes spinRing {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
-
-  /* আইকন */
   .splash-icon {
     font-size: 5rem;
     animation: iconPop 1s ease-out, floatIcon 2s ease-in-out infinite 1s;
@@ -82,8 +99,6 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
   }
-
-  /* নাম */
   .splash-title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -99,8 +114,6 @@
     0% { opacity: 0; transform: translateY(30px) scale(0.8); letter-spacing: 20px; }
     100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
   }
-
-  /* সাবটাইটেল */
   .splash-sub {
     color: #a8d8ff;
     font-size: 1rem;
@@ -113,8 +126,6 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* লোডিং ডট */
   .loading-dots {
     display: flex;
     gap: 10px;
@@ -138,176 +149,373 @@
     40% { transform: scale(1.3); opacity: 1; }
   }
 
-  /* মেইন কনটেন্ট শুরুতে লুকানো থাকবে */
+  /* ========== মেইন কনটেন্ট ========== */
   #mainContent {
     opacity: 0;
     transition: opacity 1s ease;
+    position: relative;
+    z-index: 1;
   }
   #mainContent.show {
     opacity: 1;
   }
 
-  /* ========== মূল ওয়েবসাইটের স্টাইল ========== */
+  /* হেডার */
   header {
     text-align: center;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #4a6fc7);
     color: #fff;
-    padding: 25px 15px;
-    border-radius: 12px;
+    padding: 30px 20px;
+    border-radius: 18px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
   }
-  header h1 { font-size: 2.2rem; letter-spacing: 1px; }
-  header p { margin-top: 6px; opacity: 0.9; }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: headerGlow 4s ease-in-out infinite;
+  }
+  @keyframes headerGlow {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(10%, 10%); }
+  }
+  header h1 {
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 20px rgba(0, 212, 255, 0.5);
+    position: relative;
+    z-index: 2;
+  }
+  header p {
+    margin-top: 8px;
+    opacity: 0.95;
+    position: relative;
+    z-index: 2;
+    font-size: 0.95rem;
+  }
 
+  /* ড্যাশবোর্ড কার্ড - প্রতিটি আলাদা রঙের */
   .dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 20px;
   }
   .card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
+    border-radius: 16px;
+    padding: 18px 15px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    transition: transform 0.6s ease;
   }
   .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(42, 82, 152, 0.2);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.25);
   }
-  .card .label { font-size: 0.85rem; color: #666; }
-  .card .value { font-size: 1.5rem; font-weight: bold; color: #1e3c72; margin-top: 5px; }
+  .card:hover::before {
+    transform: translate(-20%, -20%);
+  }
+  .card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .card:nth-child(2) { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .card:nth-child(3) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .card:nth-child(4) { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .card:nth-child(5) { background: linear-gradient(135deg, #fa709a, #fee140); }
+  .card .label {
+    font-size: 0.85rem;
+    opacity: 0.95;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .card .value {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-top: 6px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
 
+  /* প্যানেল - গ্লাস ইফেক্ট */
   .panel {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 22px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.5);
     animation: panelFadeIn 0.6s ease-out backwards;
+    transition: box-shadow 0.3s ease;
+  }
+  .panel:hover {
+    box-shadow: 0 14px 40px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
   }
   .panel:nth-of-type(1) { animation-delay: 0.1s; }
   .panel:nth-of-type(2) { animation-delay: 0.2s; }
   .panel:nth-of-type(3) { animation-delay: 0.3s; }
   .panel:nth-of-type(4) { animation-delay: 0.4s; }
-
   @keyframes panelFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .panel h2 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
+    font-size: 1.25rem;
+    margin-bottom: 16px;
     color: #1e3c72;
-    border-left: 4px solid #2a5298;
-    padding-left: 10px;
+    padding-left: 14px;
+    position: relative;
+    font-weight: 700;
+  }
+  .panel h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 24px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #667eea, #764ba2);
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.6);
   }
 
+  /* ফর্ম */
   .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    gap: 12px;
   }
   input, select, button {
     font-family: inherit;
     font-size: 0.95rem;
-    padding: 10px 12px;
-    border: 1px solid #ccd;
-    border-radius: 8px;
+    padding: 12px 14px;
+    border: 2px solid #e0e5f0;
+    border-radius: 10px;
     outline: none;
+    background: #f8faff;
+    transition: all 0.25s ease;
   }
-  input:focus, select:focus { border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.15); }
+  input:hover, select:hover {
+    border-color: #b8c4e0;
+    background: #fff;
+  }
+  input:focus, select:focus {
+    border-color: #667eea;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 4px 12px rgba(102, 126, 234, 0.2);
+    transform: translateY(-1px);
+  }
   button {
     cursor: pointer;
     border: none;
     font-weight: 600;
-    transition: 0.2s;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
   }
-  .btn-primary { background: #2a5298; color: #fff; }
-  .btn-primary:hover { background: #1e3c72; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(42,82,152,0.4); }
-  .btn-backup { background: #0f9d58; color: #fff; }
-  .btn-backup:hover { background: #0b7a43; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15,157,88,0.4); }
-  .btn-restore { background: #f4b400; color: #222; cursor: pointer; }
-  .btn-restore:hover { background: #d99e00; }
-  .btn-del { background: #e53935; color: #fff; padding: 6px 10px; font-size: 0.85rem; }
-  .btn-del:hover { background: #b71c1c; }
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3, #653a8a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.55);
+  }
+  .btn-primary:active { transform: translateY(0); }
 
+  .btn-backup {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(67, 233, 123, 0.4);
+  }
+  .btn-backup:hover {
+    background: linear-gradient(135deg, #2fd165, #1fe0c0);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(67, 233, 123, 0.55);
+  }
+
+  .btn-restore {
+    background: linear-gradient(135deg, #fa709a, #fee140);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+  }
+  .btn-restore:hover {
+    background: linear-gradient(135deg, #f55d8a, #f5d520);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(250, 112, 154, 0.55);
+  }
+
+  .btn-del {
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    color: #fff;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(245, 87, 108, 0.35);
+  }
+  .btn-del:hover {
+    background: linear-gradient(135deg, #e03a50, #e072e5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(245, 87, 108, 0.5);
+  }
+
+  /* পিস + / - বাটন */
   .qty-box {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: #f4f7fb;
-    border-radius: 20px;
-    padding: 3px 6px;
+    gap: 8px;
+    background: linear-gradient(135deg, #f0f4ff, #e8ecff);
+    border-radius: 25px;
+    padding: 4px 8px;
+    border: 1px solid #dde4ff;
+    box-shadow: inset 0 1px 3px rgba(102, 126, 234, 0.1);
   }
   .qty-btn {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: #2a5298;
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
     padding: 0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
   }
-  .qty-btn:hover { background: #1e3c72; }
-  .qty-btn.minus { background: #e53935; }
-  .qty-btn.minus:hover { background: #b71c1c; }
+  .qty-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+  }
+  .qty-btn:not(.minus) {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+  }
+  .qty-btn.minus {
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+  }
   .qty-value {
-    min-width: 28px;
+    min-width: 32px;
     text-align: center;
     font-weight: bold;
     color: #1e3c72;
+    font-size: 1rem;
   }
 
+  /* টেবিল */
   table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-top: 10px;
     font-size: 0.92rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
   }
   th, td {
-    padding: 10px;
+    padding: 12px 10px;
     text-align: left;
-    border-bottom: 1px solid #e3e8ef;
+    border-bottom: 1px solid #eef1f8;
   }
-  th { background: #f4f7fb; color: #1e3c72; }
-  tr { transition: background 0.2s ease; }
-  tr:hover { background: #f9fbfd; }
+  th {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+  }
+  tbody tr {
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+  tbody tr:nth-child(even) {
+    background: #fafbff;
+  }
+  tbody tr:hover {
+    background: linear-gradient(90deg, #f0f4ff, #faf5ff);
+    transform: scale(1.005);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.1);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
 
   .badge {
-    padding: 3px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
+    display: inline-block;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
-  .in-stock { background: #d4edda; color: #155724; }
-  .out-stock { background: #f8d7da; color: #721c24; }
+  .in-stock {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .out-stock {
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
 
   .backup-bar {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .empty-msg {
     text-align: center;
     color: #888;
-    padding: 20px;
+    padding: 30px;
     font-style: italic;
+    background: linear-gradient(135deg, #f8faff, #f0f4ff);
+    border-radius: 12px;
+    margin-top: 10px;
+    border: 2px dashed #d0d8f0;
   }
 
-  .total-cell { font-weight: bold; color: #0f9d58; }
+  .total-cell {
+    font-weight: bold;
+    color: #0f9d58;
+    font-size: 1rem;
+  }
 
-  /* নতুন পণ্য যোগ হলে অ্যানিমেশন */
+  /* নতুন পণ্য অ্যানিমেশন */
   @keyframes rowSlideIn {
     from { opacity: 0; transform: translateX(-30px); background: #fff9c4; }
     to { opacity: 1; transform: translateX(0); background: transparent; }
@@ -316,20 +524,41 @@
     animation: rowSlideIn 0.6s ease-out;
   }
 
+  /* স্ক্রলবার স্টাইল */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f0f4ff;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5568d3, #653a8a);
+  }
+
   @media (max-width: 600px) {
-    header h1 { font-size: 1.6rem; }
-    th, td { font-size: 0.82rem; padding: 7px; }
-    .qty-btn { width: 22px; height: 22px; font-size: 0.9rem; }
+    header h1 { font-size: 1.8rem; }
+    header { padding: 22px 15px; }
+    th, td { font-size: 0.8rem; padding: 8px 6px; }
+    .qty-btn { width: 24px; height: 24px; font-size: 0.95rem; }
+    .qty-value { min-width: 26px; font-size: 0.9rem; }
     .splash-title { font-size: 1.8rem; }
     .splash-icon { font-size: 3.5rem; }
     .splash-ring { width: 160px; height: 160px; }
     .splash-ring.ring2 { width: 210px; height: 210px; }
+    .panel { padding: 16px; }
+    .card .value { font-size: 1.4rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ============ স্প্ল্যাশ স্ক্রিন (এন্ট্রি অ্যানিমেশন) ============ -->
+<!-- ============ স্প্ল্যাশ স্ক্রিন ============ -->
 <div id="splashScreen">
   <div class="splash-ring"></div>
   <div class="splash-ring ring2"></div>
@@ -347,7 +576,7 @@
 <div id="mainContent">
 
   <header>
-    <h1>রাসেল টেলিকম</h1>
+    <h1>📱 রাসেল টেলিকম</h1>
     <p>মোবাইল ও ইলেকট্রনিকস সামগ্রীর হিসাব ও স্টক ব্যবস্থাপনা</p>
   </header>
 
@@ -397,7 +626,7 @@
     <h2>💾 ব্যাকআপ ও রিস্টোর</h2>
     <div class="backup-bar">
       <button class="btn-backup" onclick="backupData()">⬇ ডাটা ব্যাকআপ (Save)</button>
-      <label class="btn-restore" style="padding:10px 12px; border-radius:8px; font-weight:600; display:inline-block;">
+      <label class="btn-restore" style="padding:12px 14px; border-radius:10px; font-weight:600; display:inline-block;">
         ⬆ ডাটা রিস্টোর (Load)
         <input type="file" id="restoreFile" accept=".json" onchange="restoreData(event)" hidden>
       </label>
@@ -429,15 +658,15 @@
 </div>
 
 <script>
-/* ============ স্প্ল্যাশ স্ক্রিন কন্ট্রোল ============ */
+/* ============ স্প্ল্যাশ স্ক্রিন ============ */
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('splashScreen').classList.add('hide');
     document.getElementById('mainContent').classList.add('show');
-  }, 3000); // ৩ সেকেন্ড পর মেইন কনটেন্ট দেখাবে
+  }, 3000);
 });
 
-/* ============ ডাটা লোড ও সেভ ============ */
+/* ============ ডাটা ============ */
 let items = JSON.parse(localStorage.getItem('raselTelecomDataV2')) || [];
 let lastAddedId = null;
 
@@ -456,12 +685,7 @@ function addItem() {
   if (isNaN(qty) || qty < 0) { alert('সঠিক পরিমাণ লিখুন!'); return; }
 
   const newId = Date.now();
-  items.push({
-    id: newId,
-    name: name,
-    price: price,
-    qty: qty
-  });
+  items.push({ id: newId, name: name, price: price, qty: qty });
   lastAddedId = newId;
 
   saveToStorage();
@@ -473,7 +697,6 @@ function addItem() {
   document.getElementById('itemName').focus();
 }
 
-/* ============ পণ্য ডিলিট ============ */
 function deleteItem(id) {
   if (!confirm('আপনি কি এই পণ্যটি মুছে ফেলতে চান?')) return;
   items = items.filter(item => item.id !== id);
@@ -481,27 +704,16 @@ function deleteItem(id) {
   renderItems();
 }
 
-/* ============ পিস বাড়ানো ============ */
 function increaseQty(id) {
   const item = items.find(i => i.id === id);
-  if (item) {
-    item.qty += 1;
-    saveToStorage();
-    renderItems();
-  }
+  if (item) { item.qty += 1; saveToStorage(); renderItems(); }
 }
 
-/* ============ পিস কমানো ============ */
 function decreaseQty(id) {
   const item = items.find(i => i.id === id);
-  if (item && item.qty > 0) {
-    item.qty -= 1;
-    saveToStorage();
-    renderItems();
-  }
+  if (item && item.qty > 0) { item.qty -= 1; saveToStorage(); renderItems(); }
 }
 
-/* ============ স্ট্যাটাস নির্ধারণ ============ */
 function getStatus(item) {
   return item.qty > 0 ? 'আছে' : 'নাই';
 }
@@ -525,12 +737,10 @@ function renderItems() {
     const totalPrice = item.price * item.qty;
 
     const tr = document.createElement('tr');
-    if (item.id === lastAddedId) {
-      tr.classList.add('new-row');
-    }
+    if (item.id === lastAddedId) tr.classList.add('new-row');
     tr.innerHTML = `
       <td>${index + 1}</td>
-      <td>${escapeHtml(item.name)}</td>
+      <td><strong>${escapeHtml(item.name)}</strong></td>
       <td>৳ ${item.price.toLocaleString('bn-BD')}</td>
       <td>
         <div class="qty-box">
@@ -552,20 +762,15 @@ function renderItems() {
   updateDashboard();
 }
 
-/* ============ ড্যাশবোর্ড আপডেট ============ */
+/* ============ ড্যাশবোর্ড ============ */
 function updateDashboard() {
   document.getElementById('totalItems').textContent = items.length;
-
   const totalPieces = items.reduce((sum, i) => sum + i.qty, 0);
   document.getElementById('totalPieces').textContent = totalPieces.toLocaleString('bn-BD');
-
   const totalValue = items.reduce((sum, i) => sum + (i.price * i.qty), 0);
   document.getElementById('totalValue').textContent = '৳ ' + totalValue.toLocaleString('bn-BD');
-
-  document.getElementById('inStockCount').textContent =
-    items.filter(i => i.qty > 0).length;
-  document.getElementById('outStockCount').textContent =
-    items.filter(i => i.qty === 0).length;
+  document.getElementById('inStockCount').textContent = items.filter(i => i.qty > 0).length;
+  document.getElementById('outStockCount').textContent = items.filter(i => i.qty === 0).length;
 }
 
 /* ============ ব্যাকআপ ============ */
@@ -591,14 +796,12 @@ function restoreData(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (!Array.isArray(data)) throw new Error('ভুল ফরম্যাট');
-
       const normalized = data.map(d => ({
         id: d.id || Date.now() + Math.random(),
         name: d.name || 'নামহীন',
         price: Number(d.price) || 0,
         qty: Number(d.qty) || 0
       }));
-
       if (confirm('বর্তমান সব ডাটা মুছে এই ব্যাকআপ ফাইল থেকে ডাটা ফিরিয়ে আনা হবে। আপনি কি নিশ্চিত?')) {
         items = normalized;
         saveToStorage();
@@ -613,16 +816,14 @@ function restoreData(event) {
   reader.readAsText(file);
 }
 
-/* ============ XSS সুরক্ষা ============ */
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-/* ============ ইনিশিয়াল রেন্ডার ============ */
 renderItems();
 </script>
 
 </body>
- </html>
+</html>
