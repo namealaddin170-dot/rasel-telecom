@@ -1,4 +1,4 @@
-ki <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
@@ -79,12 +79,45 @@ ki <!DOCTYPE html>
   .btn-primary:hover { background: #1e3c72; }
   .btn-backup { background: #0f9d58; color: #fff; }
   .btn-backup:hover { background: #0b7a43; }
-  .btn-restore { background: #f4b400; color: #222; }
+  .btn-restore { background: #f4b400; color: #222; cursor: pointer; }
   .btn-restore:hover { background: #d99e00; }
   .btn-del { background: #e53935; color: #fff; padding: 6px 10px; font-size: 0.85rem; }
   .btn-del:hover { background: #b71c1c; }
   .btn-toggle { background: #607d8b; color: #fff; padding: 6px 10px; font-size: 0.85rem; }
   .btn-toggle:hover { background: #455a64; }
+
+  /* পিস + / - বাটনের স্টাইল */
+  .qty-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f4f7fb;
+    border-radius: 20px;
+    padding: 3px 6px;
+  }
+  .qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #2a5298;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+  .qty-btn:hover { background: #1e3c72; }
+  .qty-btn.minus { background: #e53935; }
+  .qty-btn.minus:hover { background: #b71c1c; }
+  .qty-value {
+    min-width: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #1e3c72;
+  }
 
   table {
     width: 100%;
@@ -124,9 +157,12 @@ ki <!DOCTYPE html>
     font-style: italic;
   }
 
+  .total-cell { font-weight: bold; color: #0f9d58; }
+
   @media (max-width: 600px) {
     header h1 { font-size: 1.6rem; }
     th, td { font-size: 0.82rem; padding: 7px; }
+    .qty-btn { width: 22px; height: 22px; font-size: 0.9rem; }
   }
 </style>
 </head>
@@ -140,8 +176,12 @@ ki <!DOCTYPE html>
 <!-- ড্যাশবোর্ড -->
 <div class="dashboard">
   <div class="card">
-    <div class="label">মোট পণ্য</div>
+    <div class="label">মোট পণ্যের ধরন</div>
     <div class="value" id="totalItems">0</div>
+  </div>
+  <div class="card">
+    <div class="label">মোট পিস</div>
+    <div class="value" id="totalPieces">0</div>
   </div>
   <div class="card">
     <div class="label">মোট স্টক মূল্য</div>
@@ -162,12 +202,8 @@ ki <!DOCTYPE html>
   <h2>➕ নতুন পণ্য যোগ করুন</h2>
   <div class="form-grid">
     <input type="text" id="itemName" placeholder="পণ্যের নাম (যেমন: Samsung A15)">
-    <input type="number" id="itemPrice" placeholder="দাম / টাকা" min="0">
-    <input type="date" id="itemDate">
-    <select id="itemStatus">
-      <option value="আছে">আছে</option>
-      <option value="নাই">নাই</option>
-    </select>
+    <input type="number" id="itemPrice" placeholder="একটির দাম (৳)" min="0" step="any">
+    <input type="number" id="itemQty" placeholder="পরিমাণ (কয় পিস)" min="0" value="1">
     <button class="btn-primary" onclick="addItem()">যোগ করুন</button>
   </div>
 </div>
@@ -183,7 +219,7 @@ ki <!DOCTYPE html>
   <h2>💾 ব্যাকআপ ও রিস্টোর</h2>
   <div class="backup-bar">
     <button class="btn-backup" onclick="backupData()">⬇ ডাটা ব্যাকআপ (Save)</button>
-    <label class="btn-restore" style="display:inline-block;">
+    <label class="btn-restore" style="padding:10px 12px; border-radius:8px; font-weight:600; display:inline-block;">
       ⬆ ডাটা রিস্টোর (Load)
       <input type="file" id="restoreFile" accept=".json" onchange="restoreData(event)" hidden>
     </label>
@@ -199,8 +235,9 @@ ki <!DOCTYPE html>
         <tr>
           <th>#</th>
           <th>পণ্যের নাম</th>
-          <th>দাম (৳)</th>
-          <th>তারিখ</th>
+          <th>একটির দাম</th>
+          <th>পরিমাণ (পিস)</th>
+          <th>মোট দাম</th>
           <th>স্ট্যাটাস</th>
           <th>অ্যাকশন</th>
         </tr>
@@ -214,28 +251,27 @@ ki <!DOCTYPE html>
 
 <script>
 /* ===== ডাটা লোড ও সেভ ===== */
-let items = JSON.parse(localStorage.getItem('raselTelecomData')) || [];
+let items = JSON.parse(localStorage.getItem('raselTelecomDataV2')) || [];
 
 function saveToStorage() {
-  localStorage.setItem('raselTelecomData', JSON.stringify(items));
+  localStorage.setItem('raselTelecomDataV2', JSON.stringify(items));
 }
 
 /* ===== পণ্য যোগ ===== */
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
   const price = parseFloat(document.getElementById('itemPrice').value);
-  const date = document.getElementById('itemDate').value;
-  const status = document.getElementById('itemStatus').value;
+  const qty = parseInt(document.getElementById('itemQty').value);
 
   if (!name) { alert('পণ্যের নাম লিখুন!'); return; }
   if (isNaN(price) || price < 0) { alert('সঠিক দাম লিখুন!'); return; }
+  if (isNaN(qty) || qty < 0) { alert('সঠিক পরিমাণ লিখুন!'); return; }
 
   items.push({
     id: Date.now(),
     name: name,
     price: price,
-    date: date || new Date().toISOString().split('T')[0],
-    status: status
+    qty: qty
   });
 
   saveToStorage();
@@ -244,8 +280,7 @@ function addItem() {
   // ফর্ম রিসেট
   document.getElementById('itemName').value = '';
   document.getElementById('itemPrice').value = '';
-  document.getElementById('itemDate').value = '';
-  document.getElementById('itemStatus').value = 'আছে';
+  document.getElementById('itemQty').value = '1';
 }
 
 /* ===== পণ্য ডিলিট ===== */
@@ -256,14 +291,29 @@ function deleteItem(id) {
   renderItems();
 }
 
-/* ===== স্টক স্ট্যাটাস টগল ===== */
-function toggleStatus(id) {
+/* ===== পিস বাড়ানো ===== */
+function increaseQty(id) {
   const item = items.find(i => i.id === id);
   if (item) {
-    item.status = item.status === 'আছে' ? 'নাই' : 'আছে';
+    item.qty += 1;
     saveToStorage();
     renderItems();
   }
+}
+
+/* ===== পিস কমানো ===== */
+function decreaseQty(id) {
+  const item = items.find(i => i.id === id);
+  if (item && item.qty > 0) {
+    item.qty -= 1;
+    saveToStorage();
+    renderItems();
+  }
+}
+
+/* ===== স্ট্যাটাস নির্ধারণ (qty এর উপর ভিত্তি করে) ===== */
+function getStatus(item) {
+  return item.qty > 0 ? 'আছে' : 'নাই';
 }
 
 /* ===== রেন্ডার ===== */
@@ -284,19 +334,26 @@ function renderItems() {
   }
 
   filtered.forEach((item, index) => {
+    const status = getStatus(item);
+    const statusClass = status === 'আছে' ? 'in-stock' : 'out-stock';
+    const totalPrice = item.price * item.qty;
+
     const tr = document.createElement('tr');
-    const statusClass = item.status === 'আছে' ? 'in-stock' : 'out-stock';
     tr.innerHTML = `
       <td>${index + 1}</td>
       <td>${escapeHtml(item.name)}</td>
       <td>৳ ${item.price.toLocaleString('bn-BD')}</td>
-      <td>${item.date}</td>
-      <td><span class="badge ${statusClass}">${item.status}</span></td>
       <td>
-        <div class="actions">
-          <button class="btn-toggle" onclick="toggleStatus(${item.id})">🔄 পরিবর্তন</button>
-          <button class="btn-del" onclick="deleteItem(${item.id})">🗑 ডিলিট</button>
+        <div class="qty-box">
+          <button class="qty-btn minus" onclick="decreaseQty(${item.id})" title="১ পিস কমান">−</button>
+          <span class="qty-value">${item.qty}</span>
+          <button class="qty-btn" onclick="increaseQty(${item.id})" title="১ পিস বাড়ান">+</button>
         </div>
+      </td>
+      <td class="total-cell">৳ ${totalPrice.toLocaleString('bn-BD')}</td>
+      <td><span class="badge ${statusClass}">${status}</span></td>
+      <td>
+        <button class="btn-del" onclick="deleteItem(${item.id})">🗑 ডিলিট</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -308,10 +365,17 @@ function renderItems() {
 /* ===== ড্যাশবোর্ড আপডেট ===== */
 function updateDashboard() {
   document.getElementById('totalItems').textContent = items.length;
-  const total = items.reduce((sum, i) => sum + i.price, 0);
-  document.getElementById('totalValue').textContent = '৳ ' + total.toLocaleString('bn-BD');
-  document.getElementById('inStockCount').textContent = items.filter(i => i.status === 'আছে').length;
-  document.getElementById('outStockCount').textContent = items.filter(i => i.status === 'নাই').length;
+
+  const totalPieces = items.reduce((sum, i) => sum + i.qty, 0);
+  document.getElementById('totalPieces').textContent = totalPieces.toLocaleString('bn-BD');
+
+  const totalValue = items.reduce((sum, i) => sum + (i.price * i.qty), 0);
+  document.getElementById('totalValue').textContent = '৳ ' + totalValue.toLocaleString('bn-BD');
+
+  document.getElementById('inStockCount').textContent =
+    items.filter(i => i.qty > 0).length;
+  document.getElementById('outStockCount').textContent =
+    items.filter(i => i.qty === 0).length;
 }
 
 /* ===== ব্যাকআপ ===== */
@@ -337,8 +401,17 @@ function restoreData(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (!Array.isArray(data)) throw new Error('ভুল ফরম্যাট');
+
+      // পুরনো ফরম্যাট (তারিখসহ) হলে সেটাও সাপোর্ট করা হবে
+      const normalized = data.map(d => ({
+        id: d.id || Date.now() + Math.random(),
+        name: d.name || 'নামহীন',
+        price: Number(d.price) || 0,
+        qty: Number(d.qty) || 0
+      }));
+
       if (confirm('বর্তমান সব ডাটা মুছে এই ব্যাকআপ ফাইল থেকে ডাটা ফিরিয়ে আনা হবে। আপনি কি নিশ্চিত?')) {
-        items = data;
+        items = normalized;
         saveToStorage();
         renderItems();
         alert('✅ ডাটা সফলভাবে রিস্টোর হয়েছে!');
@@ -359,7 +432,6 @@ function escapeHtml(text) {
 }
 
 /* ===== ইনিশিয়াল রেন্ডার ===== */
-document.getElementById('itemDate').value = new Date().toISOString().split('T')[0];
 renderItems();
 </script>
 
