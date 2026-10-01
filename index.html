@@ -33,7 +33,7 @@
     50% { transform: translate(-5%, -5%) rotate(180deg); }
   }
 
-  /* ===== স্প্ল্যাশ ===== */
+  /* স্প্ল্যাশ */
   #splashScreen {
     position: fixed;
     top: 0; left: 0;
@@ -86,11 +86,8 @@
     50% { transform: translateY(-12px); }
   }
   .splash-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #fff;
-    margin-top: 30px;
-    letter-spacing: 2px;
+    font-size: 2.5rem; font-weight: bold; color: #fff;
+    margin-top: 30px; letter-spacing: 2px;
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.9), 0 0 40px rgba(0, 212, 255, 0.5);
     opacity: 0;
     animation: titleSlide 1s ease-out 0.6s forwards;
@@ -101,9 +98,7 @@
     100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
   }
   .splash-sub {
-    color: #a8d8ff;
-    font-size: 1rem;
-    margin-top: 10px;
+    color: #a8d8ff; font-size: 1rem; margin-top: 10px;
     opacity: 0;
     animation: fadeInUp 1s ease-out 1.2s forwards;
     z-index: 2;
@@ -113,15 +108,13 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .loading-dots {
-    display: flex; gap: 10px;
-    margin-top: 40px;
+    display: flex; gap: 10px; margin-top: 40px;
     opacity: 0;
     animation: fadeInUp 0.6s ease-out 1.6s forwards;
     z-index: 2;
   }
   .loading-dots span {
-    width: 12px; height: 12px;
-    border-radius: 50%;
+    width: 12px; height: 12px; border-radius: 50%;
     background: #00d4ff;
     box-shadow: 0 0 15px #00d4ff;
     animation: dotBounce 1.4s ease-in-out infinite;
@@ -133,7 +126,6 @@
     40% { transform: scale(1.3); opacity: 1; }
   }
 
-  /* ===== মেইন ===== */
   #mainContent {
     opacity: 0;
     transition: opacity 1s ease;
@@ -142,11 +134,9 @@
   }
   #mainContent.show { opacity: 1; }
 
-  /* ভাষা বাটন */
   .lang-switch {
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: 15px; right: 15px;
     z-index: 100;
     background: linear-gradient(135deg, #ffd93d, #ffb700);
     color: #1e3c72;
@@ -158,15 +148,12 @@
     cursor: pointer;
     box-shadow: 0 6px 20px rgba(255, 183, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: flex; align-items: center; gap: 8px;
   }
   .lang-switch:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 10px 25px rgba(255, 183, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.4);
   }
-  .lang-switch:active { transform: translateY(0) scale(1); }
 
   header {
     text-align: center;
@@ -193,21 +180,16 @@
     50% { transform: translate(10%, 10%); }
   }
   header h1 {
-    font-size: 2.4rem;
-    letter-spacing: 2px;
+    font-size: 2.4rem; letter-spacing: 2px;
     text-shadow: 0 2px 20px rgba(0, 212, 255, 0.5);
-    position: relative;
-    z-index: 2;
+    position: relative; z-index: 2;
   }
   header p {
-    margin-top: 8px;
-    opacity: 0.95;
-    position: relative;
-    z-index: 2;
+    margin-top: 8px; opacity: 0.95;
+    position: relative; z-index: 2;
     font-size: 0.95rem;
   }
 
-  /* ড্যাশবোর্ড */
   .dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -244,23 +226,16 @@
   .card:nth-child(4) { background: linear-gradient(135deg, #43e97b, #38f9d7); }
   .card:nth-child(5) { background: linear-gradient(135deg, #fa709a, #fee140); }
   .card .label {
-    font-size: 0.85rem;
-    opacity: 0.95;
-    font-weight: 500;
-    position: relative;
-    z-index: 2;
+    font-size: 0.85rem; opacity: 0.95; font-weight: 500;
+    position: relative; z-index: 2;
     text-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
   .card .value {
-    font-size: 1.7rem;
-    font-weight: bold;
-    margin-top: 6px;
-    position: relative;
-    z-index: 2;
+    font-size: 1.7rem; font-weight: bold; margin-top: 6px;
+    position: relative; z-index: 2;
     text-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
 
-  /* প্যানেল */
   .panel {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -303,7 +278,6 @@
     box-shadow: 0 0 10px rgba(102, 126, 234, 0.6);
   }
 
-  /* ফর্ম */
   .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -330,8 +304,7 @@
     transform: translateY(-1px);
   }
   button {
-    cursor: pointer;
-    border: none;
+    cursor: pointer; border: none;
     font-weight: 600;
     transition: all 0.25s ease;
     letter-spacing: 0.3px;
@@ -381,7 +354,143 @@
     box-shadow: 0 6px 15px rgba(245, 87, 108, 0.5);
   }
 
-  /* ===== ফিল্টার বাটন ===== */
+  /* ===== ইডিট বাটন ===== */
+  .btn-edit {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(79, 172, 254, 0.35);
+    margin-right: 5px;
+  }
+  .btn-edit:hover {
+    background: linear-gradient(135deg, #2e8fe0, #00d4e6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(79, 172, 254, 0.5);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== ইডিট মোডাল ===== */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(15, 32, 39, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 15px;
+  }
+  .modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+    transform: scale(0.8) translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-overlay.show .modal-box {
+    transform: scale(1) translateY(0);
+  }
+  .modal-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe, #43e97b);
+    background-size: 200% 100%;
+    animation: modalTopBar 3s linear infinite;
+  }
+  @keyframes modalTopBar {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .modal-title {
+    font-size: 1.4rem;
+    color: #1e3c72;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+  .modal-title-icon {
+    font-size: 1.6rem;
+    animation: iconWiggle 2s ease-in-out infinite;
+  }
+  @keyframes iconWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+  }
+  .modal-field {
+    margin-bottom: 16px;
+  }
+  .modal-field label {
+    display: block;
+    font-size: 0.88rem;
+    color: #556;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .modal-field input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .modal-actions button {
+    flex: 1;
+    padding: 13px;
+    border-radius: 12px;
+    font-size: 1rem;
+  }
+  .btn-save {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: #fff;
+    box-shadow: 0 5px 18px rgba(67, 233, 123, 0.5);
+  }
+  .btn-save:hover {
+    background: linear-gradient(135deg, #2fd165, #1fe0c0);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(67, 233, 123, 0.6);
+  }
+  .btn-cancel {
+    background: #eef2f7;
+    color: #556;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .btn-cancel:hover {
+    background: #e0e5ee;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  }
+
+  /* ফিল্টার বাটন */
   .filter-bar {
     display: flex;
     gap: 10px;
@@ -436,7 +545,6 @@
     background: rgba(255,255,255,0.3);
   }
 
-  /* পিস বক্স */
   .qty-box {
     display: inline-flex;
     align-items: center;
@@ -475,7 +583,6 @@
     font-size: 1rem;
   }
 
-  /* টেবিল */
   table {
     width: 100%;
     border-collapse: separate;
@@ -551,6 +658,12 @@
   }
   tr.new-row { animation: rowSlideIn 0.6s ease-out; }
 
+  @keyframes rowUpdate {
+    0% { background: #c8f7d4; transform: scale(1.02); }
+    100% { background: transparent; transform: scale(1); }
+  }
+  tr.updated-row { animation: rowUpdate 0.9s ease-out; }
+
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: #f0f4ff; border-radius: 10px; }
   ::-webkit-scrollbar-thumb {
@@ -564,7 +677,7 @@
   @media (max-width: 600px) {
     header h1 { font-size: 1.8rem; }
     header { padding: 22px 15px; }
-    th, td { font-size: 0.78rem; padding: 8px 5px; }
+    th, td { font-size: 0.75rem; padding: 8px 5px; }
     .qty-btn { width: 24px; height: 24px; font-size: 0.95rem; }
     .qty-value { min-width: 26px; font-size: 0.9rem; }
     .splash-title { font-size: 1.8rem; }
@@ -575,12 +688,15 @@
     .card .value { font-size: 1.4rem; }
     .lang-switch { padding: 8px 12px; font-size: 0.85rem; }
     .filter-btn { padding: 8px 14px; font-size: 0.82rem; }
+    .btn-edit, .btn-del { padding: 5px 8px; font-size: 0.75rem; }
+    .modal-box { padding: 20px; }
+    .modal-title { font-size: 1.15rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- স্প্ল্যাশ স্ক্রিন -->
+<!-- স্প্ল্যাশ -->
 <div id="splashScreen">
   <div class="splash-ring"></div>
   <div class="splash-ring ring2"></div>
@@ -592,12 +708,38 @@
   </div>
 </div>
 
-<!-- ভাষা পরিবর্তন বাটন -->
+<!-- ভাষা বাটন -->
 <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">
   🌐 <span id="langLabel">English</span>
 </button>
 
-<!-- মেইন কনটেন্ট -->
+<!-- ইডিট মোডাল -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <div class="modal-title">
+      <span class="modal-title-icon">✏️</span>
+      <span id="modalTitleText">পণ্য এডিট করুন</span>
+    </div>
+    <div class="modal-field">
+      <label id="lblEditName">পণ্যের নাম</label>
+      <input type="text" id="editName">
+    </div>
+    <div class="modal-field">
+      <label id="lblEditPrice">একটির দাম (৳)</label>
+      <input type="number" id="editPrice" min="0" step="any">
+    </div>
+    <div class="modal-field">
+      <label id="lblEditQty">পরিমাণ (পিস)</label>
+      <input type="number" id="editQty" min="0">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="btnCancel" onclick="closeEditModal()">বাতিল</button>
+      <button class="btn-save" id="btnSave" onclick="saveEdit()">সেভ করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- মেইন -->
 <div id="mainContent">
 
   <header>
@@ -628,7 +770,6 @@
     </div>
   </div>
 
-  <!-- নতুন পণ্য -->
   <div class="panel">
     <h2 id="lblAddNew">➕ নতুন পণ্য যোগ করুন</h2>
     <div class="form-grid">
@@ -639,13 +780,11 @@
     </div>
   </div>
 
-  <!-- সার্চ -->
   <div class="panel">
     <h2 id="lblSearch">🔍 পণ্য খুঁজুন</h2>
     <input type="text" id="searchBox" placeholder="পণ্যের নাম লিখে সার্চ করুন..." oninput="renderItems()" style="width:100%">
   </div>
 
-  <!-- ব্যাকআপ -->
   <div class="panel">
     <h2 id="lblBackup">💾 ব্যাকআপ ও রিস্টোর</h2>
     <div class="backup-bar">
@@ -657,11 +796,9 @@
     </div>
   </div>
 
-  <!-- পণ্যের তালিকা -->
   <div class="panel">
     <h2 id="lblList">📋 পণ্যের তালিকা</h2>
 
-    <!-- ফিল্টার বাটন -->
     <div class="filter-bar">
       <button class="filter-btn all active" id="filterAll" onclick="setFilter('all')">
         <span id="lblFilterAll">🔵 সব</span>
@@ -736,7 +873,14 @@ const translations = {
     noMatch: "এই ফিল্টারে কোনো পণ্য নেই।",
     statusIn: "আছে",
     statusOut: "নাই",
+    btnEdit: "✏️ এডিট",
     btnDelete: "🗑 ডিলিট",
+    modalTitle: "পণ্য এডিট করুন",
+    lblEditName: "পণ্যের নাম",
+    lblEditPrice: "একটির দাম (৳)",
+    lblEditQty: "পরিমাণ (পিস)",
+    btnCancel: "বাতিল",
+    btnSave: "সেভ করুন",
     alertName: "পণ্যের নাম লিখুন!",
     alertPrice: "সঠিক দাম লিখুন!",
     alertQty: "সঠিক পরিমাণ লিখুন!",
@@ -745,6 +889,7 @@ const translations = {
     confirmRestore: "বর্তমান সব ডাটা মুছে এই ব্যাকআপ ফাইল থেকে ডাটা ফিরিয়ে আনা হবে। আপনি কি নিশ্চিত?",
     alertRestoreOk: "✅ ডাটা সফলভাবে রিস্টোর হয়েছে!",
     alertRestoreFail: "❌ ফাইলটি সঠিক ব্যাকআপ ফাইল নয়!",
+    alertEditOk: "✅ পণ্য সফলভাবে আপডেট হয়েছে!",
     currency: "৳"
   },
   en: {
@@ -782,7 +927,14 @@ const translations = {
     noMatch: "No products in this filter.",
     statusIn: "In Stock",
     statusOut: "Out",
+    btnEdit: "✏️ Edit",
     btnDelete: "🗑 Delete",
+    modalTitle: "Edit Product",
+    lblEditName: "Product Name",
+    lblEditPrice: "Unit Price (৳)",
+    lblEditQty: "Quantity (pcs)",
+    btnCancel: "Cancel",
+    btnSave: "Save",
     alertName: "Please enter product name!",
     alertPrice: "Please enter a valid price!",
     alertQty: "Please enter a valid quantity!",
@@ -791,46 +943,44 @@ const translations = {
     confirmRestore: "All current data will be replaced by this backup file. Are you sure?",
     alertRestoreOk: "✅ Data restored successfully!",
     alertRestoreFail: "❌ Invalid backup file!",
+    alertEditOk: "✅ Product updated successfully!",
     currency: "৳"
   }
 };
 
 let currentLang = localStorage.getItem('raselTelecomLang') || 'bn';
 let currentFilter = 'all';
+let editingId = null;
+let lastAddedId = null;
+let lastUpdatedId = null;
 
 /* ============ ভাষা প্রয়োগ ============ */
 function applyLanguage() {
   const t = translations[currentLang];
   document.documentElement.lang = currentLang;
 
-  // স্প্ল্যাশ
   document.getElementById('splashTitle').textContent = t.splashTitle;
   document.getElementById('splashSub').textContent = t.splashSub;
   document.getElementById('langLabel').textContent = t.langLabel;
 
-  // হেডার
   document.getElementById('headerTitle').textContent = t.headerTitle;
   document.getElementById('headerSub').textContent = t.headerSub;
 
-  // ড্যাশবোর্ড লেবেল
   document.getElementById('lblTotalItems').textContent = t.lblTotalItems;
   document.getElementById('lblTotalPieces').textContent = t.lblTotalPieces;
   document.getElementById('lblTotalValue').textContent = t.lblTotalValue;
   document.getElementById('lblInStock').textContent = t.lblInStock;
   document.getElementById('lblOutStock').textContent = t.lblOutStock;
 
-  // প্যানেল
   document.getElementById('lblAddNew').textContent = t.lblAddNew;
   document.getElementById('lblSearch').textContent = t.lblSearch;
   document.getElementById('lblBackup').textContent = t.lblBackup;
   document.getElementById('lblList').textContent = t.lblList;
 
-  // ফিল্টার
   document.getElementById('lblFilterAll').textContent = t.lblFilterAll;
   document.getElementById('lblFilterHas').textContent = t.lblFilterHas;
   document.getElementById('lblFilterOut').textContent = t.lblFilterOut;
 
-  // টেবিল হেডার
   document.getElementById('thName').textContent = t.thName;
   document.getElementById('thPrice').textContent = t.thPrice;
   document.getElementById('thQty').textContent = t.thQty;
@@ -838,21 +988,25 @@ function applyLanguage() {
   document.getElementById('thStatus').textContent = t.thStatus;
   document.getElementById('thAction').textContent = t.thAction;
 
-  // বাটন
   document.getElementById('btnAdd').textContent = t.btnAdd;
   document.getElementById('btnBackup').textContent = t.btnBackup;
   document.getElementById('btnRestore').childNodes[0].nodeValue = t.btnRestore + ' ';
 
-  // প্লেসহোল্ডার
   document.getElementById('itemName').placeholder = t.placeholderName;
   document.getElementById('itemPrice').placeholder = t.placeholderPrice;
   document.getElementById('itemQty').placeholder = t.placeholderQty;
   document.getElementById('searchBox').placeholder = t.placeholderSearch;
 
-  // খালি মেসেজ
   document.getElementById('emptyMsg').textContent = t.emptyMsg;
 
-  // বাটনের ভাষা পরিবর্তনের লেবেল
+  // মোডাল
+  document.getElementById('modalTitleText').textContent = t.modalTitle;
+  document.getElementById('lblEditName').textContent = t.lblEditName;
+  document.getElementById('lblEditPrice').textContent = t.lblEditPrice;
+  document.getElementById('lblEditQty').textContent = t.lblEditQty;
+  document.getElementById('btnCancel').textContent = t.btnCancel;
+  document.getElementById('btnSave').textContent = t.btnSave;
+
   document.title = currentLang === 'bn' ? 'রাসেল টেলিকম | Rasel Telecom' : 'Rasel Telecom | রাসেল টেলিকম';
 
   renderItems();
@@ -887,7 +1041,6 @@ window.addEventListener('load', () => {
 
 /* ============ ডাটা ============ */
 let items = JSON.parse(localStorage.getItem('raselTelecomDataV2')) || [];
-let lastAddedId = null;
 
 function saveToStorage() {
   localStorage.setItem('raselTelecomDataV2', JSON.stringify(items));
@@ -917,6 +1070,61 @@ function addItem() {
   document.getElementById('itemName').focus();
 }
 
+/* ============ ইডিট মোডাল ============ */
+function openEditModal(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  editingId = id;
+  document.getElementById('editName').value = item.name;
+  document.getElementById('editPrice').value = item.price;
+  document.getElementById('editQty').value = item.qty;
+  document.getElementById('editModal').classList.add('show');
+  setTimeout(() => document.getElementById('editName').focus(), 350);
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('show');
+  editingId = null;
+}
+
+function saveEdit() {
+  const t = translations[currentLang];
+  const name = document.getElementById('editName').value.trim();
+  const price = parseFloat(document.getElementById('editPrice').value);
+  const qty = parseInt(document.getElementById('editQty').value);
+
+  if (!name) { alert(t.alertName); return; }
+  if (isNaN(price) || price < 0) { alert(t.alertPrice); return; }
+  if (isNaN(qty) || qty < 0) { alert(t.alertQty); return; }
+
+  const item = items.find(i => i.id === editingId);
+  if (item) {
+    item.name = name;
+    item.price = price;
+    item.qty = qty;
+    lastUpdatedId = editingId;
+    saveToStorage();
+    renderItems();
+    closeEditModal();
+  }
+}
+
+/* মোডাল ওভারলেতে ক্লিক করলে বন্ধ হবে */
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+/* Esc চাপলে বন্ধ হবে */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('editModal').classList.contains('show')) {
+    closeEditModal();
+  }
+  if (e.key === 'Enter' && document.getElementById('editModal').classList.contains('show')) {
+    saveEdit();
+  }
+});
+
+/* ============ ডিলিট / পিস ============ */
 function deleteItem(id) {
   const t = translations[currentLang];
   if (!confirm(t.confirmDelete)) return;
@@ -948,7 +1156,6 @@ function renderItems() {
   const emptyMsg = document.getElementById('emptyMsg');
   tbody.innerHTML = '';
 
-  // ফিল্টার কাউন্ট আপডেট
   const countAll = items.length;
   const countHas = items.filter(i => i.qty > 0).length;
   const countOut = items.filter(i => i.qty === 0).length;
@@ -956,7 +1163,6 @@ function renderItems() {
   document.getElementById('countHas').textContent = countHas;
   document.getElementById('countOut').textContent = countOut;
 
-  // ফিল্টার + সার্চ প্রয়োগ
   let filtered = items.filter(item =>
     item.name.toLowerCase().includes(search)
   );
@@ -970,6 +1176,8 @@ function renderItems() {
     emptyMsg.style.display = 'none';
   }
 
+  const loc = currentLang === 'bn' ? 'bn-BD' : 'en-US';
+
   filtered.forEach((item, index) => {
     const status = getStatus(item);
     const statusClass = item.qty > 0 ? 'in-stock' : 'out-stock';
@@ -977,10 +1185,11 @@ function renderItems() {
 
     const tr = document.createElement('tr');
     if (item.id === lastAddedId) tr.classList.add('new-row');
+    if (item.id === lastUpdatedId) tr.classList.add('updated-row');
     tr.innerHTML = `
       <td>${index + 1}</td>
       <td><strong>${escapeHtml(item.name)}</strong></td>
-      <td>${t.currency} ${item.price.toLocaleString(currentLang === 'bn' ? 'bn-BD' : 'en-US')}</td>
+      <td>${t.currency} ${item.price.toLocaleString(loc)}</td>
       <td>
         <div class="qty-box">
           <button class="qty-btn minus" onclick="decreaseQty(${item.id})">−</button>
@@ -988,16 +1197,20 @@ function renderItems() {
           <button class="qty-btn" onclick="increaseQty(${item.id})">+</button>
         </div>
       </td>
-      <td class="total-cell">${t.currency} ${totalPrice.toLocaleString(currentLang === 'bn' ? 'bn-BD' : 'en-US')}</td>
+      <td class="total-cell">${t.currency} ${totalPrice.toLocaleString(loc)}</td>
       <td><span class="badge ${statusClass}">${status}</span></td>
       <td>
-        <button class="btn-del" onclick="deleteItem(${item.id})">${t.btnDelete}</button>
+        <div class="action-buttons">
+          <button class="btn-edit" onclick="openEditModal(${item.id})">${t.btnEdit}</button>
+          <button class="btn-del" onclick="deleteItem(${item.id})">${t.btnDelete}</button>
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
   lastAddedId = null;
+  lastUpdatedId = null;
   updateDashboard();
 }
 
@@ -1069,4 +1282,4 @@ renderItems();
 </script>
 
 </body>
- </html>
+                               </html>
